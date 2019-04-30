@@ -46,6 +46,15 @@ class App extends Component {
     request.send(body);
   }
 
+  update = (id, text) =>{
+      const request = new XMLHttpRequest();
+      const url=`http://localhost:8080/task/delete/${id}`;
+      request.open("DELETE", url);
+      request.responseType='json';
+      request.setRequestHeader("content-Type","application/json")
+
+  }
+
   show = () => {
     this.create(this.state.text);
   }
@@ -61,7 +70,7 @@ class App extends Component {
       <Navbar/>
       <input className={"form-control"} type={"text"} placeholder={"Enter task"} onChange={this.transcribe}/>
       <button type={"submit"} onClick={this.show}>Submit</button>
-      {this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item"+index} text={item.description}/>)}
+      {this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item"+index} text={item.description} taskID={item.id} update={this.update}/>)}
     </div>);
   }
 }
