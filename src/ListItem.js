@@ -20,18 +20,15 @@ class ListItem extends Component {
     };
 
     transcribe = (e) => {
-        console.log("b")
-
         this.setState({
             text: e.target.value
         })
     };
 
     render() {
-        console.log(this.props.taskID);
 
         let item = <div>
-                <span onClick={() => {this.setState({isInput: true})}}>{this.state.text}</span>
+                <span onClick={() => {this.setState({isInput: true})}}>{this.props.text}</span>
                 <button className={"button btn-small btn-danger mr-auto"}
                         onClick={() => {this.props.delete(this.props.taskID)}}>
                  -
