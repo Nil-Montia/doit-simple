@@ -33,10 +33,10 @@ class LoginForm extends Component{
                         <input type="text" className="form-control" placeholder="Enter username" onChange={this.transcribeUser}/>
                     </div>
                     <div className="col">
-                        <input type="text" className="form-control" placeholder="Enter password" onChange={this.transcribePasswd}/>
+                        <input type="password" className="form-control" placeholder="Enter password" onChange={this.transcribePasswd}/>
                     </div>
                     <div className="col">
-                        <button type="button" className="btn btn-primary mb-2" onClick={()=>{this.props.login(this.state.usernm,this.state.passwd)}}>Submit</button>
+                        <button type="button" className="btn btn-primary mb-2" onClick={()=>{this.props.login(this.state.usernm,this.state.passwd)}}>Sign in</button>
                     </div>
                 </div>
             </form>
