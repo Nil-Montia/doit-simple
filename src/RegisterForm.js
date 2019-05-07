@@ -6,8 +6,8 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props);
         this.setState({
-            username:"",
-            password:""
+            username:"none",
+            password:"none"
         })
 
     }
@@ -25,7 +25,7 @@ class RegisterForm extends Component {
 
     createUser =() => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8080/user/create';
+        const url = 'http://localhost:8082/user/create';
         if ((this.state.username!=="")&&(this.state.password!=="")){
             request.open("POST", url);
             request.responseType = 'json';
@@ -33,6 +33,7 @@ class RegisterForm extends Component {
             let body;
             body = JSON.stringify({username: this.state.username, password: this.state.password})
             request.onload = (e) => {
+                console.log(request.response);
                 if(request.response==="Successful"){
                     window.alert("Registration successful")
                 }else{

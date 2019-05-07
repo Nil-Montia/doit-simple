@@ -15,7 +15,7 @@ class TaskDisplay extends Component{
 
     create = (text) => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8080/task/create';
+        const url = 'http://localhost:8082/task/create';
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")
@@ -30,7 +30,7 @@ class TaskDisplay extends Component{
 
     update = (id, text) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8080/task/update/${id}`;
+        const url = `http://localhost:8082/task/update/${id}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -45,7 +45,7 @@ class TaskDisplay extends Component{
 
     delete = (id) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8080/task/delete/${id}`;
+        const url = `http://localhost:8082/task/delete/${id}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -59,7 +59,7 @@ class TaskDisplay extends Component{
 
     loadUserListItems = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8080/task/get/${this.state.usrid}`;
+        const url = `http://localhost:8082/task/get/${this.state.usrid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")

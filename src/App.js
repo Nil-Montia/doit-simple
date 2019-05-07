@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from "./Navbar";
 import RegisterForm from "./RegisterForm";
 import TaskDisplay from "./TaskDisplay";
+import TaskBlock from "./TaskBlock";
+
 
 class App extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class App extends Component {
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8080/user/login`;
+        const url = `http://localhost:8082/user/login`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
