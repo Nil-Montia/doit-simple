@@ -19,9 +19,6 @@ class App extends Component {
         }
     }
 
-    listLoad = () => {
-        this.loadUserListItems()
-    };
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
@@ -60,6 +57,7 @@ class App extends Component {
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}
                         signout={this.signout}/>
             {this.state.loggedin ? <TaskDisplay usrid={this.state.usrid}/> : <RegisterForm/>}
+            <TaskBlock blockid={1}/>
             </div>
         )
     }

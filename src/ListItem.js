@@ -19,6 +19,13 @@ class ListItem extends Component {
         }
     };
 
+    mobileDisplay = () => {
+        this.props.update(this.props.taskID, this.state.text)
+        this.setState({
+            isInput: false
+        })
+    }
+
     transcribe = (e) => {
         this.setState({
             text: e.target.value
@@ -35,8 +42,8 @@ class ListItem extends Component {
                 </button>
         </div>;
 
-        let input = <input type={"text"}className={"form-control"} placeholder={"Input description"}
-                           onChange={this.transcribe} onKeyDown={this.display} value={this.state.text}/>;
+        let input = <span><input type={"text"}className={"form-control"} placeholder={"Input description"}
+                                 onChange={this.transcribe} onKeyDown={this.display} value={this.state.text}/><button className={"d-md-none btn btn-dark"} onClick={this.mobileDisplay}>Update</button></span>;
         return (<div>
             {!this.state.isInput ? item : input}
         </div>)

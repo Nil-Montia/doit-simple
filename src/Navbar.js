@@ -3,9 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import LoginForm from "./LoginForm";
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         let loginForm = <LoginForm className="ml-auto" login={this.props.login}/>;

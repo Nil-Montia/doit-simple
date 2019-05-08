@@ -5,10 +5,10 @@ import './register-form.css';
 class RegisterForm extends Component {
     constructor(props) {
         super(props);
-        this.setState({
+        this.state={
             username:"none",
             password:"none"
-        })
+        }
 
     }
     transcribeUser = (e) => {
@@ -34,7 +34,7 @@ class RegisterForm extends Component {
             body = JSON.stringify({username: this.state.username, password: this.state.password})
             request.onload = (e) => {
                 console.log(request.response);
-                if(request.response==="Successful"){
+                if(request.response===1){
                     window.alert("Registration successful")
                 }else{
                     window.alert("User already exists")

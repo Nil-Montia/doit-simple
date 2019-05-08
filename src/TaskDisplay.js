@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ListItem from "./ListItem";
+import TaskBlock from "./TaskBlock";
 
 class TaskDisplay extends Component{
     constructor(props){
@@ -8,7 +9,8 @@ class TaskDisplay extends Component{
         this.state = {
             usrid:this.props.usrid,
             text: "something",
-            arr: [{description:"WHOOPS",id:0}],
+            arr: [],
+            blocklist:[]
         }
     }
 
@@ -82,9 +84,33 @@ class TaskDisplay extends Component{
 
     componentDidMount =() => {
         this.loadUserListItems();
+        this.loadBlockList();
+    };
+
+    loadBlockList = () =>{
+        const request = new XMLHttpRequest();
+        const url = `http://localhost:8082/block/get/${this.state.usrid}`;
+        request.open("GET", url);
+        request.responseType = 'json';
+        request.setRequestHeader("content-Type", "application/json")
+        request.onload = () => {
+            console.log(request.response)
+            let list = request.response;
+            console.log("BlockList: ", list);
+            this.setState({
+                blockList: list
+            })
+        };
+        request.send();
     }
 
     render(){
+        let listview = this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item" + index}
+                                                                     text={item.description} taskID={item.id}
+                                                                     update={this.update}
+                                                                     delete={this.delete}/>);
+        let blockview={/* map of blocks */}
+
         return(
             <div className={"card"}>
                 <input className={"form-control"} type={"text"} placeholder={"Enter task"} onChange={this.transcribe}/>
