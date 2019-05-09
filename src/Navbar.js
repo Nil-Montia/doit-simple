@@ -13,6 +13,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
                 <a className="navbar-brand" href="#">Doit</a>
+
                 {this.props.loggedin ? greeting : loginForm}
             </nav>
         );

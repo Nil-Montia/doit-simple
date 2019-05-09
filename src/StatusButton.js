@@ -7,38 +7,45 @@ class Button extends Component{
         this.style = ["btn-info","btn-warning","btn-danger", "btn-success"];
         this.buttonText = {"btn-info" : "Pending", "btn-warning": "Urgent", "btn-danger": "Uncompleted", "btn-success":"Completed"}
         this.state=({
-            statusId:this.props.statusId||0,
-            usrid:this.props.usrid
+            status:this.props.status||0,
+            usrid:this.props.usrid,
+            taskId:this.props.taskId,
+            className:props.className||"",
+            isInput:this.props.isInput||false
         })
-
     }
+
 
     statusChange=(e)=> {
         this.setState ({
-            statusId:((this.state.statusId+1)%this.style.length)
+            status:((this.state.status+1)%this.style.length)
         });
-        this.update()
-    }
+        if (this.props.isInput){
+            this.props.transcribeStatus(this.state.status);
+        }else{
+            this.update();
+        }
+
+    };
 
     update = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/update/${this.taskID}`;
+        const url = `http://localhost:8082/task/update/${this.props.taskId}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body;
-        body = JSON.stringify({Status : this.state.statusId, userid: this.props.usrid})
+        body = JSON.stringify({status : this.state.status, userid: this.props.usrid})
         request.onload = (e) => {
-            console.log(request.status);
-            this.loadUserListItems();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            this.props.loadOwnTasks();
         };
         request.send(body);
     };
 
     render() {
         return (
-            <div>
-                <button type="button" className={"btn "+this.style[this.state.statusId]}  onClick={this.statusChange}>{this.buttonText[this.style[this.state.statusId]]}</button>
+            <div className={this.state.className}>
+                <button type="button" className={"btn "+this.style[this.state.status]}  onClick={this.statusChange}>{this.buttonText[this.style[this.state.status]]}</button>
             </div>
         )
     }

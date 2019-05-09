@@ -21,13 +21,13 @@ class Cell extends Component {
         })
     }
 
-    makeShow(field){
-        if (field==="Status"){
-            return <Button statusId={this.props.info}/>
-        }else{
-            return <span onClick={()=>(this.setState({isInput:true}))}> {this.props.info}</span>
-        }
-    }
+    // makeShow(field){
+    //     if (field==="status"){
+    //         return
+    //     }else{
+    //         return
+    //     }
+    // }
 
     localUpdate = (e) =>{
         if (e.key==="Enter"){
@@ -43,39 +43,37 @@ class Cell extends Component {
         this.setState({
             info: e.target.value
         })
-        console.log("The cell says: ", this.state.info)
     };
 
     update = (info) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/update/${this.taskID}`;
+        const url = `http://localhost:8082/task/update/${this.props.taskId}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body;
-        body = JSON.stringify({[this.props.field] : info, userid: this.props.usrid})
+        body = JSON.stringify({[this.props.field] : info, userid: this.props.usrid, blockid:this.props.blockid});
         request.onload = (e) => {
-            console.log(request.status);
-            this.loadUserListItems();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            this.props.loadOwnTasks();
         };
         request.send(body);
     };
 
 
     makeInput(field){
-        if (field==="Status"){
+        if (field==="status"){
             return "";
         }else{
-            let dictionary = {Description: "text", dueDate: "date"};
+            let dictionary = {description: "text", due_date: "date", "Due Date":"date"};
             return (
-                <input type={dictionary[field]} classname={"form-control"} placeholder={`Enter ${field}`} onKeyDown={this.localUpdate} onChange={this.transcribe}/>
+                <input type={dictionary[field]} className={"form-control"} placeholder={`Enter ${field}`} onKeyDown={this.localUpdate} onChange={this.transcribe}/>
             )
         }
     }
 
     render() {
         return(
-            <td>{!this.state.isInput ? this.state.show : this.state.input}</td>
+            <td>{!this.state.isInput ? this.props.field==="status" ? <Button status={this.props.info} taskId={this.props.taskId}/> : <span onClick={()=>(this.setState({isInput:true}))}> {this.props.info}</span>  : this.state.input}</td>
         )
     }
 }

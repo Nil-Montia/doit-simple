@@ -10,7 +10,7 @@ class TaskDisplay extends Component{
             usrid:this.props.usrid,
             text: "something",
             arr: [],
-            blocklist:[]
+            blockList:[]
         }
     }
 
@@ -82,6 +82,20 @@ class TaskDisplay extends Component{
         })
     };
 
+    createBlock = () => {
+        const request = new XMLHttpRequest();
+        const url = `http://localhost:8082/block/create`;
+        request.open("POST", url);
+        request.responseType = 'json';
+        request.setRequestHeader("content-Type", "application/json");
+        request.setRequestHeader("Accept", "application/json");
+        let body = JSON.stringify({userid: this.state.usrid})
+        request.onload = () => {
+            this.loadBlockList();
+        };
+        request.send(body);
+    }
+
     componentDidMount =() => {
         this.loadUserListItems();
         this.loadBlockList();
@@ -94,7 +108,7 @@ class TaskDisplay extends Component{
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")
         request.onload = () => {
-            console.log(request.response)
+            console.log(request.response);
             let list = request.response;
             console.log("BlockList: ", list);
             this.setState({
@@ -105,23 +119,21 @@ class TaskDisplay extends Component{
     }
 
     render(){
-        let listview = this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item" + index}
+        let listview = <div><input className={"form-control"} type={"text"} placeholder={"Enter task"} onChange={this.transcribe}/>
+            <button type={"submit"} onClick={() => {
+            this.create(this.state.text)
+        }}>Submit</button> {this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item" + index}
                                                                      text={item.description} taskID={item.id}
                                                                      update={this.update}
-                                                                     delete={this.delete}/>);
-        let blockview={/* map of blocks */}
+                                                                     delete={this.delete}/>)}</div>;
+        let blockview= this.state.blockList.map((bloc, index)=>(<TaskBlock blockid={bloc.blockid} usrid={this.props.usrid} loadBlockList={this.loadBlockList} title={bloc.title}/>));
 
         return(
-            <div className={"card"}>
-                <input className={"form-control"} type={"text"} placeholder={"Enter task"} onChange={this.transcribe}/>
-                <button type={"submit"} onClick={() => {
-                    this.create(this.state.text)
-                }}>Submit
-                </button>
-                {this.state.arr.map((item, index) => <ListItem className={"self-align-center"} key={"item" + index}
-                                                               text={item.description} taskID={item.id}
-                                                               update={this.update}
-                                                               delete={this.delete}/>)}
+            <div className>
+                <div className={"col"}>
+                <button type={"button"} className={"btn btn-outline-secondary"} onClick={this.createBlock}> Add Task Block</button>
+                </div>
+                {blockview}
             </div>
         )
     }

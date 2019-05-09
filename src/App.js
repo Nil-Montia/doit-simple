@@ -15,10 +15,22 @@ class App extends Component {
             arr: [{description:"WHOOPS",id:0}],
             loggedin: false,
             register: false,
-            username: ""
+            username: "",
+            listView:false,
         }
     }
 
+    listViewing = () => {
+        this.setState({
+            listView:true
+        })
+    };
+
+    blockViewing = () => {
+        this.setState({
+            listView:true
+        })
+    };
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
@@ -55,9 +67,8 @@ class App extends Component {
         return (
             <div>
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}
-                        signout={this.signout}/>
+                        signout={this.signout} listView={this.state.listView} listViewing={this.listViewing} blockViewing={this.blockViewing}/>
             {this.state.loggedin ? <TaskDisplay usrid={this.state.usrid}/> : <RegisterForm/>}
-            <TaskBlock blockid={1}/>
             </div>
         )
     }
