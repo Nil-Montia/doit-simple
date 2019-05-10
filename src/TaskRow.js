@@ -56,7 +56,7 @@ class TaskRow extends Component {
             request.setRequestHeader("content-Type", "application/json");
             let body;
             body = JSON.stringify({status: this.state.status,
-                userid: this.props.task.usrid,
+                userid: this.props.usrid,
                 description: this.state.description,
                 dueDate: this.state.dueDate,
                 blockid: this.props.task.blockid,
@@ -81,11 +81,26 @@ class TaskRow extends Component {
         request.send();
     };
 
+    showDate= (input)=> {
+        let output = "";
+        let cutHere = input.length;
+        for (let i = input.length; i > 0; i--) {
+            if (input.substring(i - 1, i) === "-") {
+                output += input.substring(i, cutHere) + "/";
+                cutHere = i - 1;
+            }
+            if (i === 1) {
+                output += input.substring(i - 1, cutHere)
+            }
+        }
+        return output;
+    };
+
     render() {
         let description= <span onClick={() => this.setState({descriptionIsInput:true})}>{this.state.task.description}</span>;
-        let dueDate= <span onClick={() => this.setState({dueDateIsInput:true})}>{this.state.task.dueDate}</span>;
-        let descInput= <span><input type={"text"} className={"form-control"} placeholder={"Enter description"} onKeyDown={this.update} onChange={this.transcribeDescription}/></span>;
-        let dateInput= <span><input type={"date"} className={"form-control"} placeholder={"Enter description"} onKeyDown={this.update} onChange={this.transcribeDate}/></span>;
+        let dueDate= <span onClick={() => this.setState({dueDateIsInput:true})}>{this.showDate(this.state.task.dueDate)}</span>;
+        let descInput= <span><input autoFocus onBlur={() => this.setState({descriptionIsInput:false})} type={"text"} className={"form-control"} placeholder={"Enter description"} onKeyDown={this.update} onChange={this.transcribeDescription}/></span>;
+        let dateInput= <span><input autoFocus onBlur={() => this.setState({dueDateIsInput:false})} type={"date"} className={"form-control"} placeholder={"Enter description"} onKeyDown={this.update} onChange={this.transcribeDate}/></span>;
         let delbutton = <button type="button" className="btn btn-danger btn-sm" onClick={this.deleteTask}>-</button>;
 
         return (

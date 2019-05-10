@@ -11,11 +11,18 @@ class InputRow extends Component {
             usrid: props.usrid || 1,
             description: "",
             status: 0,
-            dueDate: "",
             isInput: true,
             blockid: this.props.blockid
         };
     }
+
+    getDate = () => {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        return yyyy + "-" + mm + "-" + dd;
+    };
 
     transcribeDesc = (e) => {
         this.setState({
@@ -32,7 +39,7 @@ class InputRow extends Component {
     transcribeDueDate = (e) => {
         this.setState({
             dueDate: e.target.value
-        })
+        });
     };
 
     createTask = () => {
@@ -44,7 +51,7 @@ class InputRow extends Component {
         let body = JSON.stringify({
             userid: this.props.usrid,
             description: this.state.description,
-            dueDate: this.state.dueDate,
+            dueDate: this.state.dueDate || this.getDate(),
             blockid: this.props.blockid,
             status: this.state.status
         });
