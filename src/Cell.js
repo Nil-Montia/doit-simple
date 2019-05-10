@@ -9,15 +9,14 @@ class Cell extends Component {
             field: props.field,
             info: this.props.info,
             isInput: false,
-            input:"",
-            show:""
+            input: "",
+            show: ""
         }
     }
 
     componentDidMount() {
         this.setState({
             input: this.makeInput(this.props.field),
-            show: this.makeShow(this.props.field)
         })
     }
 
@@ -29,9 +28,8 @@ class Cell extends Component {
     //     }
     // }
 
-    localUpdate = (e) =>{
-        if (e.key==="Enter"){
-            //this.props.update(this.props.taskID, this.state.text)
+    localUpdate = (e) => {
+        if (e.key === "Enter") {
             this.setState({
                 isInput: false
             })
@@ -52,7 +50,7 @@ class Cell extends Component {
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body;
-        body = JSON.stringify({[this.props.field] : info, userid: this.props.usrid, blockid:this.props.blockid});
+        body = JSON.stringify({[this.props.field]: info, userid: this.props.usrid, blockid: this.props.blockid});
         request.onload = (e) => {
             this.props.loadOwnTasks();
         };
@@ -60,20 +58,25 @@ class Cell extends Component {
     };
 
 
-    makeInput(field){
-        if (field==="status"){
+    makeInput(field) {
+        if (field === "status") {
             return "";
-        }else{
-            let dictionary = {description: "text", due_date: "date", "Due Date":"date"};
+        } else {
+            let dictionary = {description: "text", dueDate: "date", "Due Date": "date"};
             return (
-                <input type={dictionary[field]} className={"form-control"} placeholder={`Enter ${field}`} onKeyDown={this.localUpdate} onChange={this.transcribe}/>
+                <input type={dictionary[field]} className={"form-control"} placeholder={`Enter ${field}`}
+                       onKeyDown={this.localUpdate} onChange={this.transcribe}/>
             )
         }
     }
 
     render() {
-        return(
-            <td>{!this.state.isInput ? this.props.field==="status" ? <Button status={this.props.info} taskId={this.props.taskId}/> : <span onClick={()=>(this.setState({isInput:true}))}> {this.props.info}</span>  : this.state.input}</td>
+        return (
+            <td>
+                {!this.state.isInput ? this.props.field === "status" ?
+                <Button status={this.props.info} taskId={this.props.taskId}/> : <span
+                    onClick={() => (this.setState({isInput: true}))}> {this.props.info}</span> : this.state.input}
+            </td>
         )
     }
 }

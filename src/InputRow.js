@@ -6,7 +6,7 @@ class InputRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: ["description", "status", "due_date"],
+            fields: ["description", "status", "dueDate"],
             usrid: props.usrid || 1,
             description: "",
             status: 0,
@@ -43,7 +43,7 @@ class InputRow extends Component {
         let body = JSON.stringify({
             userid: this.props.usrid,
             description: this.state.description,
-            due_date: this.state.dueDate,
+            dueDate: this.state.dueDate,
             blockid: this.props.blockid,
             status: this.state.status
         });

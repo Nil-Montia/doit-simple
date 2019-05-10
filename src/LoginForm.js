@@ -6,8 +6,7 @@ class LoginForm extends Component{
         super(props);
         this.state={
             usernm:"",
-            passwd:"",
-            login:false
+            passwd:""
         }
     }
 

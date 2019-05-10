@@ -34,7 +34,7 @@ class ListItem extends Component {
 
     render() {
 
-        let item = <div>
+        let item = <div className={"col"}>
                 <span onClick={() => {this.setState({isInput: true})}}>{this.props.text}</span>
                 <button className={"button btn-small btn-danger mr-auto"}
                         onClick={() => {this.props.delete(this.props.taskID)}}>
