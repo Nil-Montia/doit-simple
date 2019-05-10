@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from "./StatusButton";
+import { BACKEND_URL } from './api-config';
 
 class TaskRow extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ class TaskRow extends Component {
                 dueDateIsInput:false
             })
             const request = new XMLHttpRequest();
-            const url = `http://localhost:8082/task/update/${this.props.task.id}`;
+            const url = `http://${BACKEND_URL}:8082/task/update/${this.props.task.id}`;
             request.open("POST", url);
             request.responseType = 'json';
             request.setRequestHeader("content-Type", "application/json");
@@ -69,7 +70,7 @@ class TaskRow extends Component {
 
     deleteTask = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/delete/${this.state.task.id}`;
+        const url = `http://${BACKEND_URL}:8082/task/delete/${this.state.task.id}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -78,7 +79,7 @@ class TaskRow extends Component {
             this.props.loadOwnTasks();
         };
         request.send();
-    }
+    };
 
     render() {
         let description= <span onClick={() => this.setState({descriptionIsInput:true})}>{this.state.task.description}</span>;

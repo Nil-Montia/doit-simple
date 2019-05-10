@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from "./Navbar";
 import RegisterForm from "./RegisterForm";
 import TaskDisplay from "./TaskDisplay";
+import { BACKEND_URL } from './api-config';
 
 
 class App extends Component {
@@ -32,7 +33,7 @@ class App extends Component {
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/user/login`;
+        const url = `http://${BACKEND_URL}:8082/user/login`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

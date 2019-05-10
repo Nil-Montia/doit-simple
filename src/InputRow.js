@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from "./StatusButton";
+import { BACKEND_URL } from './api-config';
 
 class InputRow extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class InputRow extends Component {
 
     createTask = () => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8082/task/create';
+        const url = `http://${BACKEND_URL}:8082/task/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

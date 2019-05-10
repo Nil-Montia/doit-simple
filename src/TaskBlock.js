@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import TaskRow from "./TaskRow";
 import InputRow from "./InputRow";
+import { BACKEND_URL } from './api-config';
 
 class TaskBlock extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class TaskBlock extends Component {
 
     updateTitle = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/update/${this.props.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/block/update/${this.props.blockid}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -51,7 +52,7 @@ class TaskBlock extends Component {
 
     loadOwnTasks = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/block/${this.state.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/task/block/${this.state.blockid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -71,7 +72,7 @@ class TaskBlock extends Component {
 
     deleteBlock = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/delete/${this.state.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/block/delete/${this.state.blockid}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

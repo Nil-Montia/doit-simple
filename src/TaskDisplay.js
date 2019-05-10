@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ListItem from "./ListItem";
 import TaskBlock from "./TaskBlock";
+import { BACKEND_URL } from './api-config';
 
 class TaskDisplay extends Component{
     constructor(props){
@@ -17,7 +18,7 @@ class TaskDisplay extends Component{
 
     create = (text) => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8082/task/create';
+        const url = `http://${BACKEND_URL}:8082/task/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")
@@ -32,7 +33,7 @@ class TaskDisplay extends Component{
 
     update = (id, text) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/update/${id}`;
+        const url = `http://${BACKEND_URL}:8082/task/update/${id}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -47,7 +48,7 @@ class TaskDisplay extends Component{
 
     delete = (id) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/delete/${id}`;
+        const url = `http://${BACKEND_URL}:8082/task/delete/${id}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -61,7 +62,7 @@ class TaskDisplay extends Component{
 
     loadUserListItems = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/get/${this.state.usrid}`;
+        const url = `http://${BACKEND_URL}:8082/task/get/${this.state.usrid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")
@@ -84,7 +85,7 @@ class TaskDisplay extends Component{
 
     createBlock = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/create`;
+        const url = `http://${BACKEND_URL}:8082/block/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -103,7 +104,7 @@ class TaskDisplay extends Component{
 
     loadBlockList = () =>{
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/get/${this.state.usrid}`;
+        const url = `http://${BACKEND_URL}:8082/block/get/${this.state.usrid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")

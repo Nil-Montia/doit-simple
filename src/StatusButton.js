@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import { BACKEND_URL } from './api-config';
 
 class Button extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Button extends Component {
 
     update = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/update/${this.props.taskId}`;
+        const url = `http://${BACKEND_URL}:8082/task/update/${this.props.taskId}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
