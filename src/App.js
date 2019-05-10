@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import ListItem from "./ListItem";
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from "./Navbar";
 import RegisterForm from "./RegisterForm";
 import TaskDisplay from "./TaskDisplay";
-import TaskBlock from "./TaskBlock";
+import { BACKEND_URL } from './api-config';
 
 
 class App extends Component {
@@ -16,7 +15,7 @@ class App extends Component {
             loggedin: false,
             register: false,
             username: "",
-            listView:false,
+            listView:false
         }
     }
 
@@ -28,13 +27,13 @@ class App extends Component {
 
     blockViewing = () => {
         this.setState({
-            listView:true
+            listView:false
         })
     };
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/user/login`;
+        const url = `http://${BACKEND_URL}:8082/user/login`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -68,7 +67,7 @@ class App extends Component {
             <div>
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}
                         signout={this.signout} listView={this.state.listView} listViewing={this.listViewing} blockViewing={this.blockViewing}/>
-            {this.state.loggedin ? <TaskDisplay usrid={this.state.usrid}/> : <RegisterForm/>}
+            {this.state.loggedin ? <TaskDisplay usrid={this.state.usrid} listView={this.state.listView}/> : <RegisterForm/>}
             </div>
         )
     }

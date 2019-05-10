@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './register-form.css';
+import { BACKEND_URL } from './api-config';
 
 class RegisterForm extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class RegisterForm extends Component {
 
     createUser =() => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8082/user/create';
+        const url = `http://${BACKEND_URL}:8082/user/create`;
         if ((this.state.username!=="")&&(this.state.password!=="")){
             request.open("POST", url);
             request.responseType = 'json';

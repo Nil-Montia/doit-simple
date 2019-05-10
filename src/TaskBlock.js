@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import TaskRow from "./TaskRow";
 import InputRow from "./InputRow";
+import { BACKEND_URL } from './api-config';
 
 class TaskBlock extends Component {
     constructor(props) {
@@ -9,12 +10,13 @@ class TaskBlock extends Component {
         this.state = {
             title: this.props.title || "Task Block",
             titleIsInput: false,
-            fields: ["description", "status", "due_date"],
+            titles: ["Description","Status", "Due date"],
+            fields: ["description", "status", "dueDate"],
             blockid: this.props.blockid || 3,
             taskList: [],
             row: 1,
             taskadd: false,
-            usrid: props.usrid||1,
+            usrid: props.usrid || 1,
         }
     };
 
@@ -28,7 +30,7 @@ class TaskBlock extends Component {
         if (e.key === "Enter") {
             //this.props.update(this.props.taskID, this.state.text)
             this.setState({
-                isInput: false
+                titleIsInput: false
             });
             this.updateTitle()
         }
@@ -37,11 +39,11 @@ class TaskBlock extends Component {
 
     updateTitle = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/update/${this.props.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/block/update/${this.props.blockid}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
-        let body = JSON.stringify({title:this.state.title, userid:this.props.usrid});
+        let body = JSON.stringify({title: this.state.title, userid: this.props.usrid});
         request.onload = (e) => {
             this.props.loadBlockList();
         };
@@ -50,7 +52,7 @@ class TaskBlock extends Component {
 
     loadOwnTasks = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/task/block/${this.state.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/task/block/${this.state.blockid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -59,6 +61,7 @@ class TaskBlock extends Component {
             this.setState({
                 taskList: list
             })
+            console.log("Got block tasks")
         };
         request.send();
     };
@@ -69,7 +72,7 @@ class TaskBlock extends Component {
 
     deleteBlock = () => {
         const request = new XMLHttpRequest();
-        const url = `http://localhost:8082/block/delete/${this.state.blockid}`;
+        const url = `http://${BACKEND_URL}:8082/block/delete/${this.state.blockid}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -85,18 +88,26 @@ class TaskBlock extends Component {
         let title = <h1 className="card-title ml-1 col-10" onClick={() => {
             this.setState({titleIsInput: true})
         }}>{this.state.title}</h1>;
-        let input =<div className={"input-group input-group-lg col-6 mb-2"}><input type={"text"} className={"form-control"} placeholder={"Input description"}
-                               onChange={this.transcribeTitle} onKeyDown={this.displayTitle} value={this.state.text}/></div>;
+        let input = <div className={"input-group input-group-lg col-6 mb-2"}><input type={"text"}
+                                                                                    className={"form-control"}
+                                                                                    placeholder={"Input description"}
+                                                                                    onChange={this.transcribeTitle}
+                                                                                    onKeyDown={this.displayTitle}
+                                                                                    value={this.state.text}/></div>;
         let addButton = <button type="button" className="btn btn-dark btn-sm"
                                 onClick={() => (this.setState({taskadd: true}))}>+</button>;
         let cancelButton = <button type="button" className="btn btn-secondary btn-sm"
                                    onClick={() => (this.setState({taskadd: false}))}>-</button>;
+
+
         return (
             <div className="col-11 col-md-9 col-sm-12 mr-auto ml-auto">
                 <div className="card m-1 align-self-center">
                     <div className="row">
                         {!this.state.titleIsInput ? title : input}
-                        <button type="button" className="btn btn-danger btn-sm ml-auto mr-2 mb-2" onClick={this.deleteBlock}>-</button>
+                        <button type="button" className="btn btn-danger btn-sm ml-auto mr-2 mb-2"
+                                onClick={this.deleteBlock}>-
+                        </button>
                     </div>
                     <table className="table myTable">
                         <thead className="thead-dark">
@@ -104,14 +115,17 @@ class TaskBlock extends Component {
                             <th scope="col">
                                 {!this.state.taskadd ? addButton : cancelButton}
                             </th>
-                            {this.state.fields.map((item) => <th
-                                scope={"col"}>{item}</th>)}
+                            {this.state.titles.map((item, index) => <th
+                                scope={"col"} key={index}>{item}</th>)}
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.taskList.map((task)=> (<TaskRow fields={this.state.fields} task={task} loadOwnTasks={this.loadOwnTasks} blockid={this.state.blockid}/>))}
+                        {this.state.taskList.map((task, index) => (
+                            <TaskRow key={index} fields={this.state.fields} task={task} loadOwnTasks={this.loadOwnTasks}
+                                     blockid={this.state.blockid} row={1+index} usrid={this.props.usrid}/>))}
                         {this.state.taskadd ?
-                            <InputRow loadOwnTasks={this.loadOwnTasks} usrid={this.props.usrid} blockid={this.props.blockid}/> : ""}
+                            <InputRow loadOwnTasks={this.loadOwnTasks} usrid={this.props.usrid}
+                                      blockid={this.props.blockid}/> : null}
                         </tbody>
                     </table>
                 </div>

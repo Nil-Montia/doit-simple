@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from "./StatusButton";
+import { BACKEND_URL } from './api-config';
 
 class InputRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: ["description", "status", "due_date"],
+            fields: ["description", "status", "dueDate"],
             usrid: props.usrid || 1,
             description: "",
             status: 0,
@@ -36,14 +37,14 @@ class InputRow extends Component {
 
     createTask = () => {
         const request = new XMLHttpRequest();
-        const url = 'http://localhost:8082/task/create';
+        const url = `http://${BACKEND_URL}:8082/task/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body = JSON.stringify({
             userid: this.props.usrid,
             description: this.state.description,
-            due_date: this.state.dueDate,
+            dueDate: this.state.dueDate,
             blockid: this.props.blockid,
             status: this.state.status
         });

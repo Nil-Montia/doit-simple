@@ -12,7 +12,7 @@ class ListItem extends Component {
 
     display = (e) => {
         if (e.key === "Enter") {
-            this.props.update(this.props.taskID, this.state.text)
+            this.props.update(this.props.taskID, this.state.text);
             this.setState({
                 isInput: false
             })
@@ -20,7 +20,7 @@ class ListItem extends Component {
     };
 
     mobileDisplay = () => {
-        this.props.update(this.props.taskID, this.state.text)
+        this.props.update(this.props.taskID, this.state.text);
         this.setState({
             isInput: false
         })
@@ -34,7 +34,7 @@ class ListItem extends Component {
 
     render() {
 
-        let item = <div>
+        let item = <div className={"col"}>
                 <span onClick={() => {this.setState({isInput: true})}}>{this.props.text}</span>
                 <button className={"button btn-small btn-danger mr-auto"}
                         onClick={() => {this.props.delete(this.props.taskID)}}>
@@ -42,7 +42,7 @@ class ListItem extends Component {
                 </button>
         </div>;
 
-        let input = <span><input type={"text"}className={"form-control"} placeholder={"Input description"}
+        let input = <span><input type={"text"} className={"form-control"} placeholder={"Input description"}
                                  onChange={this.transcribe} onKeyDown={this.display} value={this.state.text}/><button className={"d-md-none btn btn-dark"} onClick={this.mobileDisplay}>Update</button></span>;
         return (<div>
             {!this.state.isInput ? item : input}
