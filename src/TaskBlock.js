@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import TaskRow from "./TaskRow";
 import InputRow from "./InputRow";
 import { BACKEND_URL } from './api-config';
+import './TaskBlock.css'
 
 class TaskBlock extends Component {
     constructor(props) {
@@ -12,13 +13,17 @@ class TaskBlock extends Component {
             titleIsInput: false,
             titles: ["Description","Status", "Due date"],
             fields: ["description", "status", "dueDate"],
-            blockid: this.props.blockid || 3,
+            blockid: this.props.blockid,
             taskList: [],
             row: 1,
             taskadd: false,
-            usrid: props.usrid || 1,
+            usrid: props.usrid
         }
     };
+
+    static getDerivedStateFromProps(props, state) {
+        return {...state, blockid: props.blockid};
+    }
 
     transcribeTitle = (e) => {
         this.setState({
@@ -60,8 +65,8 @@ class TaskBlock extends Component {
             let list = request.response;
             this.setState({
                 taskList: list
-            })
-            console.log("Got block tasks")
+            });
+            this.props.loadUserListItems();
         };
         request.send();
     };
@@ -88,12 +93,13 @@ class TaskBlock extends Component {
         let title = <h1 className="card-title ml-1 col-10" onClick={() => {
             this.setState({titleIsInput: true})
         }}>{this.state.title}</h1>;
-        let input = <div className={"input-group input-group-lg col-6 mb-2"}><input type={"text"}
+        let input = <div className={"input-group input-group-lg col-6 mb-2"}><input autoFocus type={"text"}
                                                                                     className={"form-control"}
                                                                                     placeholder={"Input description"}
                                                                                     onChange={this.transcribeTitle}
                                                                                     onKeyDown={this.displayTitle}
-                                                                                    value={this.state.text}/></div>;
+                                                                                    value={this.state.text}
+        onBlur={()=>(this.setState({titleIsInput:false}))}/></div>;
         let addButton = <button type="button" className="btn btn-dark btn-sm"
                                 onClick={() => (this.setState({taskadd: true}))}>+</button>;
         let cancelButton = <button type="button" className="btn btn-secondary btn-sm"
@@ -102,11 +108,11 @@ class TaskBlock extends Component {
 
         return (
             <div className="col-11 col-md-9 col-sm-12 mr-auto ml-auto">
-                <div className="card m-1 align-self-center">
+                <div className="card m-1 align-self-center background-light">
                     <div className="row">
                         {!this.state.titleIsInput ? title : input}
-                        <button type="button" className="btn btn-danger btn-sm ml-auto mr-2 mb-2"
-                                onClick={this.deleteBlock}>-
+                        <button type="button" className="btn btn-outline-danger ml-auto mr-2 mb-2 deleteButton text-center"
+                                onClick={this.deleteBlock}>X
                         </button>
                     </div>
                     <table className="table myTable">

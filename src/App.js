@@ -15,7 +15,8 @@ class App extends Component {
             loggedin: false,
             register: false,
             username: "",
-            listView:false
+            listView:false,
+            failedLogin:false
         }
     }
 
@@ -48,11 +49,17 @@ class App extends Component {
                     username: usernm
                 });
             } else {
-                window.alert("Wrong username and password combination")
+                this.setFailedLogin(true);
             }
         };
         request.send(body);
     };
+
+    setFailedLogin = (boolean) => {
+        this.setState({
+            failedLogin: boolean
+        })
+    }
 
     signout = () => {
         this.setState({
@@ -61,12 +68,22 @@ class App extends Component {
         });
     };
 
-    render() {
 
+    getDate = () => {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        today = yyyy + "-" + mm + "-" + dd;
+    };
+
+
+    render() {
+        this.getDate();
         return (
-            <div>
+            <div className={"background-light"}>
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}
-                        signout={this.signout} listView={this.state.listView} listViewing={this.listViewing} blockViewing={this.blockViewing}/>
+                        signout={this.signout} listView={this.state.listView} listViewing={this.listViewing} blockViewing={this.blockViewing} failedLogin={this.state.failedLogin} setFailedLogin={this.setFailedLogin}/>
             {this.state.loggedin ? <TaskDisplay usrid={this.state.usrid} listView={this.state.listView}/> : <RegisterForm/>}
             </div>
         )

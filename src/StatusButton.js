@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BACKEND_URL } from './api-config';
+import './StatusButton.css';
 
 class Button extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Button extends Component {
             "btn-danger": "Uncompleted",
             "btn-success": "Completed"
         };
+
         this.state = ({
             status: this.props.status,
             usrid: this.props.usrid,
@@ -22,24 +24,23 @@ class Button extends Component {
     }
 
     statusChange = () => {
-        this.setState({
-            status: ((this.state.status + 1) % this.style.length)
-        });
+        const stateSnapshot = { ...this.state, status: ((this.state.status + 1) % this.style.length) };
+        this.setState(stateSnapshot);
         if (this.props.isInput) {
-            this.props.transcribeStatus(this.state.status);
+            this.props.transcribeStatus(stateSnapshot.status);
         } else {
-            this.update();
+            this.update(stateSnapshot);
         }
     };
 
-    update = () => {
+    update = ({ status } = this.state) => {
         const request = new XMLHttpRequest();
         const url = `http://${BACKEND_URL}:8082/task/update/${this.props.taskId}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body;
-        body = JSON.stringify({status: this.state.status,
+        body = JSON.stringify({status: status,
             userid: this.props.usrid,
             description: this.props.task.description,
             dueDate: this.props.task.dueDate,
@@ -54,7 +55,7 @@ class Button extends Component {
     render() {
         return (
             <div className={this.state.className}>
-                <button type="button" className={"btn " + this.style[this.state.status]}
+                <button type="button" className={"transition btn " + this.style[this.state.status]}
                         onClick={this.statusChange}>{this.buttonText[this.style[this.state.status]]}</button>
             </div>
         )
