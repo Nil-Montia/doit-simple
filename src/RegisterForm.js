@@ -36,7 +36,7 @@ class RegisterForm extends Component {
             request.setRequestHeader("content-Type", "application/json");
             let body;
             body = JSON.stringify({username: this.state.username, password: this.state.password})
-            request.onload = (e) => {
+            request.onload = () => {
                 console.log(request.response);
                 if (request.response === 1) {
                     this.setState({

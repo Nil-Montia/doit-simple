@@ -49,7 +49,7 @@ class TaskBlock extends Component {
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         let body = JSON.stringify({title: this.state.title, userid: this.props.usrid});
-        request.onload = (e) => {
+        request.onload = () => {
             this.props.loadBlockList();
         };
         request.send(body);

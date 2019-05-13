@@ -41,7 +41,6 @@ class App extends Component {
         request.setRequestHeader("Accept", "application/json");
         let body = JSON.stringify({username: usernm, password: passwd});
         request.onload = () => {
-            console.log(request.response);
             if (request.response !== 0) {
                 this.setState({
                     loggedin: true,

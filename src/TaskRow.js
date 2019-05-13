@@ -61,7 +61,7 @@ class TaskRow extends Component {
                 dueDate: this.state.dueDate,
                 blockid: this.props.task.blockid,
             })
-            request.onload = (e) => {
+            request.onload = () => {
                 this.props.loadOwnTasks();
             };
             request.send(body);

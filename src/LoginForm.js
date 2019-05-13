@@ -15,7 +15,6 @@ class LoginForm extends Component{
         this.setState({
             usernm: e.target.value
         })
-        console.log(this.state.usernm)
     };
 
     transcribePasswd = (e) => {

@@ -40,8 +40,7 @@ class ListItem extends Component {
             dueDate: this.state.dueDate || this.getDate(),
             blockid: this.state.blockid || null
         });
-        request.onload = (e) => {
-            console.log(request.status);
+        request.onload = () => {
             this.props.loadUserListItems();
         };
         request.send(body);

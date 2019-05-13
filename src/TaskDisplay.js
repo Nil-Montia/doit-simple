@@ -15,11 +15,10 @@ class TaskDisplay extends Component {
         }
     }
 
-
     getDate = () => {
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let mm = String(today.getMonth() + 1).padStart(2, '0');
         let yyyy = today.getFullYear();
         return yyyy + "-" + mm + "-" + dd;
     };
@@ -32,8 +31,7 @@ class TaskDisplay extends Component {
         request.setRequestHeader("content-Type", "application/json");
         let body;
         body = JSON.stringify({description: text, userid: this.state.usrid, dueDate: this.getDate()});
-        request.onload = (e) => {
-            console.log(request.status);
+        request.onload = () => {
             this.loadUserListItems();
         };
         request.send(body);
@@ -48,7 +46,6 @@ class TaskDisplay extends Component {
         request.setRequestHeader("content-Type", "application/json");
         request.setRequestHeader("Accept", "application/json");
         request.onload = () => {
-            console.log("status: ", request.status);
             this.loadUserListItems()
         };
         request.send();
@@ -61,9 +58,7 @@ class TaskDisplay extends Component {
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
         request.onload = () => {
-            console.log(request.response);
             let list = request.response;
-            console.log("listUser: ", list);
             this.setState({
                 arr: list
             });
@@ -104,9 +99,7 @@ class TaskDisplay extends Component {
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")
         request.onload = () => {
-            console.log(request.response);
             let list = request.response;
-            console.log("BlockList: ", list);
             this.setState({
                 blockList: list
             })
