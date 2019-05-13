@@ -16,6 +16,7 @@ class Navbar extends Component {
             className={"ml-3"} onClick={this.props.listViewing}>List view</span></span>;
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+                {/*eslint-disable-next-line*/}
                 <a className="navbar-brand mr-4" href="#">Doit</a>
                 {this.props.loggedin ? viewButtons : ""}
                 {this.props.loggedin ? greeting : loginForm}
