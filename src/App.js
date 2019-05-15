@@ -68,7 +68,6 @@ class App extends Component {
     };
 
     render() {
-        this.getDate();
         return (
             <div className={"background-light"}>
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}
