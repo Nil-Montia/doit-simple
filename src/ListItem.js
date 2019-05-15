@@ -29,7 +29,7 @@ class ListItem extends Component {
 
     update = (id, text) => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/update/${id}`;
+        const url = `${BACKEND_URL}/task/update/${id}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

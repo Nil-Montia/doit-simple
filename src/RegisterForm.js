@@ -29,7 +29,7 @@ class RegisterForm extends Component {
 
     createUser = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/user/create`;
+        const url = `${BACKEND_URL}/user/create`;
         if ((this.state.username !== "") && (this.state.password !== "")) {
             request.open("POST", url);
             request.responseType = 'json';

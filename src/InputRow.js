@@ -44,7 +44,7 @@ class InputRow extends Component {
 
     createTask = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/create`;
+        const url = `${BACKEND_URL}/task/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

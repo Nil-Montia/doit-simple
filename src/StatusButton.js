@@ -35,7 +35,7 @@ class Button extends Component {
 
     update = ({ status } = this.state) => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/update/${this.props.taskId}`;
+        const url = `${BACKEND_URL}/task/update/${this.props.taskId}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");

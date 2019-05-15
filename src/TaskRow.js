@@ -50,7 +50,7 @@ class TaskRow extends Component {
                 dueDateIsInput:false
             })
             const request = new XMLHttpRequest();
-            const url = `http://${BACKEND_URL}:8082/task/update/${this.props.task.id}`;
+            const url = `${BACKEND_URL}/task/update/${this.props.task.id}`;
             request.open("POST", url);
             request.responseType = 'json';
             request.setRequestHeader("content-Type", "application/json");
@@ -70,7 +70,7 @@ class TaskRow extends Component {
 
     deleteTask = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/delete/${this.state.task.id}`;
+        const url = `${BACKEND_URL}/task/delete/${this.state.task.id}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
