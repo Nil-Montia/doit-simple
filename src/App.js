@@ -34,7 +34,7 @@ class App extends Component {
 
     login = (usernm, passwd) => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/user/login`;
+        const url = `${BACKEND_URL}/user/login`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -67,18 +67,7 @@ class App extends Component {
         });
     };
 
-
-    getDate = () => {
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = today.getFullYear();
-        today = yyyy + "-" + mm + "-" + dd;
-    };
-
-
     render() {
-        this.getDate();
         return (
             <div className={"background-light"}>
                 <Navbar login={this.login} loggedin={this.state.loggedin} username={this.state.username}

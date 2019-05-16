@@ -25,7 +25,7 @@ class TaskDisplay extends Component {
 
     create = (text) => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/create`;
+        const url = `${BACKEND_URL}/task/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -40,7 +40,7 @@ class TaskDisplay extends Component {
 
     delete = (id) => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/delete/${id}`;
+        const url = `${BACKEND_URL}/task/delete/${id}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -53,7 +53,7 @@ class TaskDisplay extends Component {
 
     loadUserListItems = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/get/${this.state.usrid}`;
+        const url = `${BACKEND_URL}/task/get/${this.state.usrid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -75,7 +75,7 @@ class TaskDisplay extends Component {
 
     createBlock = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/block/create`;
+        const url = `${BACKEND_URL}/block/create`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -94,7 +94,7 @@ class TaskDisplay extends Component {
 
     loadBlockList = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/block/get/${this.state.usrid}`;
+        const url = `${BACKEND_URL}/block/get/${this.state.usrid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json")

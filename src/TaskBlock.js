@@ -44,7 +44,7 @@ class TaskBlock extends Component {
 
     updateTitle = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/block/update/${this.props.blockid}`;
+        const url = `${BACKEND_URL}/block/update/${this.props.blockid}`;
         request.open("POST", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -57,7 +57,7 @@ class TaskBlock extends Component {
 
     loadOwnTasks = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/task/block/${this.state.blockid}`;
+        const url = `${BACKEND_URL}/task/block/${this.state.blockid}`;
         request.open("GET", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
@@ -77,7 +77,7 @@ class TaskBlock extends Component {
 
     deleteBlock = () => {
         const request = new XMLHttpRequest();
-        const url = `http://${BACKEND_URL}:8082/block/delete/${this.state.blockid}`;
+        const url = `${BACKEND_URL}/block/delete/${this.state.blockid}`;
         request.open("DELETE", url);
         request.responseType = 'json';
         request.setRequestHeader("content-Type", "application/json");
